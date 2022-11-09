@@ -1,68 +1,12 @@
-﻿using Microsoft.Extensions.Primitives;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
+﻿using System.Text;
 
 namespace ImpossibleHangman_Blazor.Data
 {
     public class ImpossibleHangmanGame
     {
-
-        //private SortedSet<char> GuessedLetters = new();
-
-        //private HashSet<String>  CurrWordSet = new();
-
-        //private int WordLength = 0;
-
-        //public ImpossibleHangmanGame()
-        //{
-
-        //}
-
-        //public void StartGame(int wordLength)
-        //{
-        //    CurrWordSet = new();
-        //    HashSet<String> inputDictionary = new(File.ReadLines("dictionary.txt").Where(x => x.Length == WordLength));
-        //    WordLength = wordLength;
-
-        //    if (CurrWordSet.Count == 0)
-        //    {
-        //        throw new Exception("There were no words of the proper length (or no words at all) in the dictionary file");
-        //    }
-
-        //}
-
-        //public HashSet<String> MakeGuess(char guess)
-        //{
-        //    StringBuilder sbGuess = new StringBuilder();
-        //    sbGuess.Append(guess);
-        //    String stringGuess = sbGuess.ToString().ToLower();
-        //    guess = stringGuess[0];
-        //    if (GuessedLetters.Contains(guess))
-        //    {
-        //        throw new Exception("You\'ve already guessed the letter " + guess);
-        //    }
-        //    else
-        //    {
-        //        Dictionary<String, HashSet<String>> subsetDictionary = Partition(guess);
-
-        //        // Determine the new currWordSet based on the partition results
-        //        Dictionary<String, HashSet<String>> largestSubsets = LargestSubset(subsetDictionary);
-        //        if ((largestSubsets.Count == 1))
-        //        {
-        //            CurrWordSet = largestSubsets.First().Value;
-        //        }
-        //        else
-        //        {
-        //            CurrWordSet = BestSubset(largestSubsets);
-        //        }
-
-        //        GuessedLetters.Add(guess);
-        //        return CurrWordSet;
-        //    }
-
-        //}
+        public ImpossibleHangmanGame()
+        {
+        }
 
         public static Dictionary<String, HashSet<String>> Partition(char guess, HashSet<String> currWordSet)
         {
@@ -86,6 +30,12 @@ namespace ImpossibleHangman_Blazor.Data
             return subsetDictionary;
         }
 
+        /// <summary>
+        /// Get subset key for the already guessed letter. Anything in the same wordset returns the same key.
+        /// </summary>
+        /// <param name="word">Word from which the subset key is computed</param>
+        /// <param name="guess">The character on which the key is based.</param>
+        /// <returns>Subset key for the guessed letter</returns>
         private static string GetSubsetKey(string word, char guess)
         {
             StringBuilder subsetKey = new StringBuilder();
@@ -103,6 +53,11 @@ namespace ImpossibleHangman_Blazor.Data
             return subsetKey.ToString();
         }
 
+        /// <summary>
+        /// Gets the largest subset in the partition
+        /// </summary>
+        /// <param name="partition">Partition of multiple potential subsets</param>
+        /// <returns>Largest subset of the partition</returns>
         public static Dictionary<String, HashSet<String>> LargestSubset(Dictionary<String, HashSet<String>> partition)
         {
             // Get highest word count of the subsetKeys
@@ -152,6 +107,11 @@ namespace ImpossibleHangman_Blazor.Data
             return RightmostLetterSubset(wordLength, fewestLetterSubsets);
         }
 
+        /// <summary>
+        /// Gets all subsets with the lowest numbrer of guessed letters
+        /// </summary>
+        /// <param name="partition"></param>
+        /// <returns>All the subsets with the lowest number of guessed letters</returns>
         private static Dictionary<String, HashSet<String>> FewestLetterSubsets(Dictionary<String, HashSet<String>> partition)
         {
             // Get fewest letter count of the subsetKeys
@@ -178,6 +138,10 @@ namespace ImpossibleHangman_Blazor.Data
             return fewestLetterSubsets;
         }
 
+        /// <summary>
+        /// Counts number of letters, not chars, in the given string
+        /// </summary>
+        /// <returns>Number of alphabetical letters in the string</returns>
         private static int NumLetters(string word)
         {
             int count = 0;
@@ -190,7 +154,11 @@ namespace ImpossibleHangman_Blazor.Data
             }
             return count;
         }
-
+        
+        /// <summary>
+        /// Breaks tie by taking the subset with the rightmost guessed letters
+        /// </summary>
+        /// <returns>Subset with the rightmost guessed letters</returns>
         private static HashSet<String> RightmostLetterSubset(int wordLength, Dictionary<String, HashSet<String>> partition)
         {
             return RightmostLetterSubset_Helper(partition, (wordLength - 1));
@@ -220,6 +188,11 @@ namespace ImpossibleHangman_Blazor.Data
                 return RightmostLetterSubset_Helper(partition, (index - 1));
             }
         }
+
+        /// <summary>
+        /// Gets the ambiguous, underscored string given the previously identified potential word and current guess
+        /// </summary>
+        /// <returns>String with underscores and only the letters guessed</returns>
         public static string GetNewCurrWord(string currWord, string potentialWord, char guess)
         {
             StringBuilder UpdatedWord = new StringBuilder(currWord);

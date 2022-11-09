@@ -13,12 +13,12 @@
 		<div>
 			<label class="d-block my-3">
 				Lives:
-				<input type="number" size="4"@bind="LivesSetting" />
+				<input type="number" size="4" @bind="Lives" />
 			</label>
 
 			<label class="d-block my-3">
 				Number of letters:
-				<input type="number" size="4"@bind="WordLength" />
+				<input type="number" size="4" @bind="WordLength" />
 			</label>
 			<button type="button" class="btn btn-primary btn-sm my-2" onclick="@StartGame">Start Game</button>
 			@if (DisplayErrorMessage)
@@ -30,9 +30,30 @@
 	else
 	{
 		<div>
-			<h1 class="text-center">@CurrWord</h1>
-			<h4 class="text-center mb-3 @(Lives < 3 ? "text-danger" : "")">Lives: @Lives</h4>
-			<div>
+			@if(WonGame)
+			{
+				<div class="text-center">
+					<h1>Congrats, you did the impossible!</h1>
+					<button type="button" class="btn btn-primary btn-sm my-2" onclick="@Reset">Play again?</button>
+					<hr />
+					<h3 class="mt-5">@CurrWord</h3>
+				</div>
+			}
+			else if(LostGame)
+			{
+				<div class="text-center">
+					<h1>That's embarrassing, you lost...</h1>
+					<button type="button" class="btn btn-primary btn-sm my-2" onclick="@Reset">Try again?</button>
+					<hr />
+					<h3 class="text-center mt-5">@CurrWord</h3>
+				</div>
+			}
+			else
+			{
+				<h1 class="text-center">@CurrWord</h1>
+			}
+			<h4 class="text-center mb-3 mb-5 @(Lives < 3 ? "text-danger" : "")">Lives: @Lives</h4>
+			<div class="mt-5">
 				<div class="row my-3 g-0 justify-content-center">
 					<div class="col text-center">
 						<a role="button" class="btn btn-size @(GuessedLetters.Contains('q') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('q')">Q</a>
@@ -121,7 +142,7 @@
 			<div>
 				<input class="form-check-input" type="checkbox" @bind="ViewSecrets" id="checkbox">
 				<label class="form-check-label" for="checkbox">
-					View secrets
+					See how it works
 				</label>
 			</div>
 			@if (ViewSecrets)
@@ -149,20 +170,16 @@
 
 @code
 {
-	private bool GameRunning = false;
-	private bool DisplayErrorMessage = false;
-	private bool ViewSecrets = false;
-	// TODO: Don't need to use LivesSetting, can just use Lives like WordLength is the same for both.
-	private int LivesSetting { get; set; } = 10;
+	private bool GameRunning { get; set; } = false;
+	private bool WonGame { get; set; } = false;
+	private bool LostGame { get; set; } = false;
+	private bool DisplayErrorMessage { get; set; } = false;
+	private bool ViewSecrets { get; set; } = false;
+	private int Lives { get; set; } = 10;
 	private int WordLength { get; set; } = 8;
-	private int Lives { get; set; }
-	private string CurrWord { get; set; }
+	private string CurrWord { get; set; } = "";
 	private SortedSet<char> GuessedLetters = new();
 	private HashSet<String> CurrWordSet = new();
-
-	protected override void OnInitialized()
-	{
-	}
 
 	private void StartGame()
 	{
@@ -182,25 +199,33 @@
 				}
 				CurrWord = blankWord.ToString();
 
-				Lives = LivesSetting;
 				GameRunning = true;
 			}
 		}
 	}
 
+	private void Reset()
+	{
+		GameRunning = false;
+		WonGame = false;
+		LostGame = false;
+		DisplayErrorMessage = false;
+		ViewSecrets = false;
+		Lives = 10;
+		WordLength = 8;
+		CurrWord = "";
+		GuessedLetters = new();
+		CurrWordSet = new();
+	}
+
 	private void MakeGuess(char guess)
 	{
-		StringBuilder sbGuess = new StringBuilder();
-		sbGuess.Append(guess);
-		String stringGuess = sbGuess.ToString().ToLower();
-		guess = stringGuess[0];
-		if (GuessedLetters.Contains(guess))
+		if (!WonGame && !LostGame)
 		{
-			// TODO: Display error message of sorts
-			//throw new Exception("You\'ve already guessed the letter " + guess);
-		}
-		else
-		{
+			StringBuilder sbGuess = new StringBuilder();
+			sbGuess.Append(guess);
+			String stringGuess = sbGuess.ToString().ToLower();
+			guess = stringGuess[0];
 			Dictionary<String, HashSet<String>> subsetDictionary = ImpossibleHangmanGame.Partition(guess, CurrWordSet);
 
 			// Update CurrWordSet based on the partition results
@@ -222,26 +247,23 @@
 			// Guess didn't narrow down the results at all
 			if (oldWord == CurrWord)
 			{
-				// TODO: Display "Sorry, there are no more ___that letter___s
 				Lives--;
 				if (Lives == 0)
 				{
-					// TODO: Tell them they lost!
-					// TODO: Display some sort of reset button
+					LostGame = true;
 				}
 			}
 			// If they narrowed it down all the way and won
 			else if (CurrWord == potentialWord)
 			{
-				// TODO: Tell them they won
-				// TODO: Display some sort of reset button
+				WonGame = true;
 			}
 		}
 	}
 
 	private bool Validate()
 	{
-		if (LivesSetting < 1 || LivesSetting > 26 || WordLength > 29 || WordLength < 2)
+		if (Lives < 1 || Lives > 26 || WordLength > 29 || WordLength < 2)
 		{
 			DisplayErrorMessage = true;
 			return false;
