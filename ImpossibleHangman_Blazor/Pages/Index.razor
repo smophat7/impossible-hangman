@@ -2,8 +2,6 @@
 @using System.Text
 @using ImpossibleHangman_Blazor.Data
 
-@*TODO: Eliminate extra files before pushing to GitHub*@
-
 <PageTitle>Impossible Hangman</PageTitle>
 
 <div>
@@ -185,7 +183,7 @@
 	{
 		if (Validate())
 		{
-			CurrWordSet = new(File.ReadLines("dictionary.txt").Where(x => x.Length == WordLength));
+			CurrWordSet = new(File.ReadLines(System.IO.Directory.GetCurrentDirectory() + "/wwwroot/dictionary.txt").Where(x => x.Length == WordLength));
 			if (CurrWordSet.Count == 0)
 			{
 				// TODO: Display error message of sorts

@@ -1,10 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 	<UseRazorSourceGenerator>false</UseRazorSourceGenerator>
+	<UserSecretsId>176fff90-b644-4666-bf4b-34d442e4aa61</UserSecretsId>
+	<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +19,14 @@
     <Content Remove="Pages\FetchData.razor" />
     <Content Remove="Shared\SurveyPrompt.razor" />
     <Content Remove="wwwroot\css\ImpossibleHangman_Blazor.styles.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\dictionary.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
   </ItemGroup>
 
 </Project>
