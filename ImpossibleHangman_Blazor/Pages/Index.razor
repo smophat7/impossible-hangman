@@ -33,135 +33,136 @@
 				{
 					<div class="text-center">
 						<h1>Congrats, you did the impossible!</h1>
-						<button type="button" class="btn btn-primary btn-sm my-2" @onclick="@Reset">Play again?</button>
-						<hr />
-						<h3 class="mt-5">@CurrWord</h3>
+						<h3>The word was "@CurrWord"</h3>
+						<button type="button" class="btn btn-primary btn-sm mt-2" @onclick="@Reset">Play again?</button>
 					</div>
 				}
 				else if(LostGame)
 				{
 					<div class="text-center">
-						@*TODO: Show goal word*@
 						<h1>That's embarrassing, you lost...</h1>
-						<button type="button" class="btn btn-primary btn-sm my-2" @onclick="@Reset">Try again?</button>
-						<hr />
-						<h3 class="text-center mt-5">@CurrWord</h3>
+						<h3 class="text-center">@CurrWord</h3>
+						<h3>The word was "@CurrWordSet.First()"</h3>
+						<button type="button mt-2" class="btn btn-primary btn-sm my-2" @onclick="@Reset">Try again?</button>
 					</div>
 				}
 				else
 				{
 					<h1 class="text-center">@CurrWord</h1>
-				}
-				<h4 class="text-center mb-3 mb-5 @(Lives < 3 ? "text-danger" : "")">Lives: @Lives</h4>
-				<div class="mt-5">
-					<div class="row my-3 g-0 justify-content-center">
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('q') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('q')">Q</a>
+					<h4 class="text-center mb-3 mb-5 @(Lives < 3 ? "text-danger" : "")">Lives: @Lives</h4>
+					<div class="mt-5">
+						<div class="row my-3 g-0 justify-content-center">
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('q') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('q')">Q</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('w') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('w')">W</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('e') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('e')">E</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('r') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('r')">R</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('t') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('t')">T</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('y') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('y')">Y</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('u') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('u')">U</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('i') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('i')">I</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('o') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('o')">O</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('p') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('p')">P</a>
+							</div>
 						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('w') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('w')">W</a>
+						<div class="row my-3 g-0 justify-content-center">
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('a') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('a')">A</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('s') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('s')">S</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('d') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('d')">D</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('f') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('f')">F</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('g') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('g')">G</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('h') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('h')">H</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('j') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('j')">J</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('k') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('k')">K</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('l') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('l')">L</a>
+							</div>
 						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('e') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('e')">E</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('r') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('r')">R</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('t') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('t')">T</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('y') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('y')">Y</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('u') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('u')">U</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('i') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('i')">I</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('o') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('o')">O</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('p') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('p')">P</a>
+						<div class="row my-3 g-0 justify-content-center">
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('z') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('z')">Z</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('x') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('x')">X</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('c') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('c')">C</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('v') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('v')">V</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('b') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('b')">B</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('n') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('n')">N</a>
+							</div>
+							<div class="col text-center">
+								<a role="button" class="btn btn-size @(GuessedLetters.Contains('m') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('m')">M</a>
+							</div>
 						</div>
 					</div>
-					<div class="row my-3 g-0 justify-content-center">
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('a') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('a')">A</a>
+					<div>
+						<div>
+							<input class="form-check-input" type="checkbox" @bind="ViewSecrets" id="checkbox">
+							<label class="form-check-label" for="checkbox">
+								See how it works
+							</label>
 						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('s') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('s')">S</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('d') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('d')">D</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('f') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('f')">F</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('g') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('g')">G</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('h') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('h')">H</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('j') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('j')">J</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('k') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('k')">K</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('l') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('l')">L</a>
-						</div>
-					</div>
-					<div class="row my-3 g-0 justify-content-center">
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('z') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('z')">Z</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('x') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('x')">X</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('c') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('c')">C</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('v') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('v')">V</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('b') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('b')">B</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('n') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('n')">N</a>
-						</div>
-						<div class="col text-center">
-							<a role="button" class="btn btn-size @(GuessedLetters.Contains('m') ? "disabled btn-secondary" : "btn-primary")" @onclick="() => MakeGuess('m')">M</a>
-						</div>
-					</div>
-				</div>
-				<div>
-					<input class="form-check-input" type="checkbox" @bind="ViewSecrets" id="checkbox">
-					<label class="form-check-label" for="checkbox">
-						See how it works
-					</label>
-				</div>
-				@if (ViewSecrets)
-				{
-					<div class="my-3">
-						<h3>How it Works:</h3>
-						<p>While not impossible, this game is designed to be highly frustrating. The game it actively working against you, as the word you are guessing
-							is not actually selected until you make a guess. When a letter is guessed, any words with that letter are eliminated from the pool of words
-							to choose from. When all of the words in the current pool contain the guessed letter, the guess is counted as correct and a smaller pool
-							of words is selected in which that new letter is in a certain position within the word. Each guess can shrink the pool of viable words
-							without being a successful guess.
-						</p>
-						<h5 class="my-2">Words in the current pool: @CurrWordSet.Count</h5>
-						<ul class="list-group">
-							@foreach (string word in CurrWordSet)
-							{
-								<li class="list-group-item">@word</li>
-							}
-						</ul>
+						@if (ViewSecrets)
+						{
+							<div class="my-3">
+								<h3>How it Works:</h3>
+								<p>
+									While not impossible, this game is designed to be highly frustrating. The game it actively working against you, as the word you are guessing
+									is not actually selected until you make a guess. When a letter is guessed, any words with that letter are eliminated from the pool of words
+									to choose from. When all of the words in the current pool contain the guessed letter, the guess is counted as correct and a smaller pool
+									of words is selected in which that new letter is in a certain position within the word. Each guess can shrink the pool of viable words
+									without being a successful guess.
+								</p>
+								<h5 class="my-2">Words in the current pool: @CurrWordSet.Count</h5>
+								<ul class="list-group">
+									@foreach (string word in CurrWordSet)
+									{
+										<li class="list-group-item">@word</li>
+									}
+								</ul>
+							</div>
+						}
 					</div>
 				}
 			</div>
