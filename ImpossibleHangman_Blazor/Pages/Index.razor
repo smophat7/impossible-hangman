@@ -22,6 +22,10 @@
 				{
 					<p class="text-danger">Lives must be in the range 1-26. Number of letters must be in the range 2-29.</p>
 				}
+				@if (DisplayEmptyDictionaryErrorMessage)
+				{
+					<p class="text-danger">Our dictionary of available words could not be loaded. Try refreshing the page.</p>
+				}
 			</form>
 		</div>
 	}
@@ -176,6 +180,7 @@
 	private bool WonGame { get; set; } = false;
 	private bool LostGame { get; set; } = false;
 	private bool DisplayErrorMessage { get; set; } = false;
+	private bool DisplayEmptyDictionaryErrorMessage { get; set; } = false;
 	private bool ViewSecrets { get; set; } = false;
 	private int Lives { get; set; } = 10;
 	private int WordLength { get; set; } = 8;
@@ -187,21 +192,28 @@
 	{
 		if (Validate())
 		{
-			CurrWordSet = new(File.ReadLines(System.IO.Directory.GetCurrentDirectory() + "/wwwroot/dictionary.txt").Where(x => x.Length == WordLength));
-			if (CurrWordSet.Count == 0)
+			try
 			{
-				// TODO: Display error message of sorts
-			}
-			else
-			{
-				StringBuilder blankWord = new StringBuilder();
-				for (int i = 0; i < WordLength; i++)
+				CurrWordSet = new(File.ReadLines(System.IO.Directory.GetCurrentDirectory() + "/wwwroot/dictionary.txt").Where(x => x.Length == WordLength));
+				if (CurrWordSet.Count == 0)
 				{
-					blankWord.Append('-');
+					DisplayEmptyDictionaryErrorMessage = true;
 				}
-				CurrWord = blankWord.ToString();
+				else
+				{
+					StringBuilder blankWord = new StringBuilder();
+					for (int i = 0; i < WordLength; i++)
+					{
+						blankWord.Append('-');
+					}
+					CurrWord = blankWord.ToString();
 
-				GameRunning = true;
+					GameRunning = true;
+				}
+			}
+			catch (Exception)
+			{
+				DisplayEmptyDictionaryErrorMessage = true;
 			}
 		}
 	}
@@ -212,6 +224,7 @@
 		WonGame = false;
 		LostGame = false;
 		DisplayErrorMessage = false;
+		DisplayEmptyDictionaryErrorMessage = false;
 		ViewSecrets = false;
 		Lives = 10;
 		WordLength = 8;
@@ -271,6 +284,7 @@
 			return false;
 		}
 		DisplayErrorMessage = false;
+		DisplayEmptyDictionaryErrorMessage = false;
 		return true;
 	}
 }
