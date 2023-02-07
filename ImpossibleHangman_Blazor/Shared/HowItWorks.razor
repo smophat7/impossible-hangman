@@ -1,0 +1,22 @@
+﻿<div class="my-3">
+	<h3>How it Works:</h3>
+	<p>
+		While not impossible, this game is designed to be highly frustrating. The game it actively working against you, as the word you are guessing
+		is not actually selected until you make a guess. When a letter is guessed, any words with that letter are eliminated from the pool of words
+		to choose from. When all of the words in the current pool contain the guessed letter, the guess is counted as correct and a smaller pool
+		of words is selected in which that new letter is in a certain position within the word. Each guess can shrink the pool of viable words
+		without being a successful guess.
+	</p>
+	<h5 class="my-2">Words in the current pool: @CurrentWordSet.Count</h5>
+	<ul class="list-group">
+		@foreach (string word in CurrentWordSet)
+		{
+			<li class="list-group-item">@word</li>
+		}
+	</ul>
+</div>
+
+@code {
+	[Parameter] public HashSet<String> CurrentWordSet { get; set; } = new();
+	[Parameter] public EventCallback<HashSet<String>> CurrentWordSetChanged { get; set; }
+}

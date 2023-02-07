@@ -10,7 +10,7 @@
 		{
 			<div class="my-auto mx-auto">
 				<GameSettingsForm @ref="gameSettingsForm" OnFormSubmit="@StartGame" />
-				<p class="text-danger">@(DictionaryErrorMessage)</p>
+				<p class="text-danger">@(_dictionaryErrorMessage)</p>
 			</div>
 		}
 		else
@@ -73,7 +73,7 @@
 							</div>
 						</div>
 					</div>
-					<div>
+					<div class="px-3">
 						<div>
 							<input class="form-check-input" type="checkbox" @bind="_viewSecrets" id="checkbox">
 							<label class="form-check-label" for="checkbox">
@@ -82,23 +82,7 @@
 						</div>
 						@if (_viewSecrets)
 						{
-							<div class="my-3">
-								<h3>How it Works:</h3>
-								<p>
-									While not impossible, this game is designed to be highly frustrating. The game it actively working against you, as the word you are guessing
-									is not actually selected until you make a guess. When a letter is guessed, any words with that letter are eliminated from the pool of words
-									to choose from. When all of the words in the current pool contain the guessed letter, the guess is counted as correct and a smaller pool
-									of words is selected in which that new letter is in a certain position within the word. Each guess can shrink the pool of viable words
-									without being a successful guess.
-								</p>
-								<h5 class="my-2">Words in the current pool: @_currentWordSet.Count</h5>
-								<ul class="list-group">
-									@foreach (string word in _currentWordSet)
-									{
-										<li class="list-group-item">@word</li>
-									}
-								</ul>
-							</div>
+							<HowItWorks @bind-CurrentWordSet="@_currentWordSet" />
 						}
 					</div>
 				}
@@ -112,7 +96,8 @@
 	private const int LivesDefault = 10;
 	private const int WordLengthDefault = 8;
 	private const string DictionaryFileLocation = "./wwwroot/dictionary.txt";
-	private string DictionaryErrorMessage { get; set; } = "";
+
+	private string _dictionaryErrorMessage { get; set; } = "";
 	private bool _gameRunning { get; set; } = false;
 	private bool _wonGame { get; set; } = false;
 	private bool _lostGame { get; set; } = false;
@@ -130,13 +115,13 @@
 		_lives = gameSettingsForm.Lives;
 		_wordLength = gameSettingsForm.WordLength;
 
-		DictionaryErrorMessage = "";
+		_dictionaryErrorMessage = "";
 		try
 		{
 			_currentWordSet = new(File.ReadLines(DictionaryFileLocation).Where(x => x.Length == _wordLength));
 			if (_currentWordSet.Count == 0)
 			{
-				DictionaryErrorMessage = "Our dictionary of available words actually had no words in it... Try refreshing the page.";
+				_dictionaryErrorMessage = "Our dictionary of available words actually had no words in it... Try refreshing the page.";
 			}
 			else
 			{
@@ -152,7 +137,7 @@
 		}
 		catch (Exception)
 		{
-			DictionaryErrorMessage = "Our dictionary of available words could not be loaded. Try refreshing the page.";
+			_dictionaryErrorMessage = "Our dictionary of available words could not be loaded. Try refreshing the page.";
 			InvokeAsync(StateHasChanged);
 		}
 	}
