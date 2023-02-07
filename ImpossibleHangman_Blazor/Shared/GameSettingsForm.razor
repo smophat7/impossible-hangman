@@ -1,0 +1,40 @@
+﻿<form class="start-form mx-auto">
+	<div class="form-group">
+		<label for="lives-input" class="d-block">Lives</label>
+		<input type="number" size="4" @bind="Lives" class="form-control-lg w-100" id="lives-input">
+	</div>
+	<div class="form-group">
+		<label for="num-letters-input" class="d-block">Number of Letters</label>
+		<input type="number" size="4" @bind="WordLength" class="form-control-lg w-100" id="num-letters-input">
+	</div>
+	<button type="button" class="btn btn-primary btn-lg my-2" @onclick="@Start">Start Game</button>
+
+	<p class="text-danger">@ValidationMessage</p>
+</form>
+
+@code {
+	[Parameter] public EventCallback OnFormSubmit { get; set; }
+
+	public int Lives { get; private set; } = 8;
+	public int WordLength { get; private set; } = 6;
+	private string ValidationMessage { get; set; } = "";
+
+	private async void Start()
+	{
+		if (Validate())
+		{
+			await OnFormSubmit.InvokeAsync();
+		}
+	}
+
+	private bool Validate()
+	{
+		ValidationMessage = "";
+		if (Lives < 1 || Lives > 26 || WordLength > 29 || WordLength < 2)
+		{
+			ValidationMessage = "Lives must be in the range 1-26. Number of letters must be in the range 2-29.";
+			return false;
+		}
+		return true;
+	}
+}

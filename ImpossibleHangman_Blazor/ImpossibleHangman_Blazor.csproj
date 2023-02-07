@@ -10,8 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\WeatherForecast.cs" />
-    <Compile Remove="Data\WeatherForecastService.cs" />
+    <Compile Remove="Services\WeatherForecast.cs" />
+    <Compile Remove="Services\WeatherForecastService.cs" />
   </ItemGroup>
 
   <ItemGroup>
