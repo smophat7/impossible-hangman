@@ -1,0 +1,16 @@
+﻿<div class="col text-center">
+	<a role="button" class="btn btn-size @(GuessedLetters.Contains(Char.ToLower(Letter)) ? "disabled btn-secondary" : "btn-primary")"
+	@onclick="() => MakeGuess(Letter)">@Letter</a>
+</div>
+
+@code {
+	[Parameter] public char Letter { get; set; }
+	[Parameter] public SortedSet<char> GuessedLetters { get; set; } = new();
+	[Parameter] public EventCallback<SortedSet<char>> GuessedLettersChanged { get; set; }
+	[Parameter] public EventCallback<char> OnMakeGuess { get; set; }
+
+	private async void MakeGuess(char letter)
+	{
+		await OnMakeGuess.InvokeAsync(letter);
+	}
+}
